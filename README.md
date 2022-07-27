@@ -1,1 +1,0 @@
-# allavaz.github.io
