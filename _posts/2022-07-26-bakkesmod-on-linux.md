@@ -219,6 +219,26 @@ Make it executable with `chmod +x bakkesinject.sh` and add it to the launch para
 
 ![](/assets/bakkesmod-on-linux/launchparams.png)
 
+EDIT: Instead of waiting for the log file to have the `"Initializing Engine Completed"` line we can just wait until RocketLeague.exe is running like this:
+
+```bash
+while ! killall -0 RocketLeague.ex 2> /dev/null; do
+    sleep 1
+done
+
+protontricks -c 'wine ~/inject.exe' 252950
+```
+
+Notice we're not launching Rocket League in this script like we were doing before with the `eval 'PROTON_LOG=1 "$@"' &` line, because we're using different launch parameters:
+
+```bash
+/home/$USER/bakkesinject.sh & %command%
+```
+
+This runs the script in the background and Rocket League in the foreground.
+
+This version of the launch script injects much faster for some reason (and we don't need to create a log file, which keeps our home directory a little cleaner), but it might be less stable, so I'm gonna leave both versions for you to experiment with.
+
 # Updating BakkesMod
 
 The injector doesn't take care of updating BakkesMod, so whenever a new version comes out, you'll have to run the good old GUI like this:
