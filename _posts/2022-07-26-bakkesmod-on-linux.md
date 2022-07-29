@@ -219,7 +219,25 @@ Make it executable with `chmod +x bakkesinject.sh` and add it to the launch para
 
 ![](/assets/bakkesmod-on-linux/launchparams.png)
 
-EDIT: Instead of waiting for the log file to have the `"Initializing Engine Completed"` line we can just wait until RocketLeague.exe is running like this:
+# Updating BakkesMod
+
+The injector doesn't take care of updating BakkesMod, so whenever a new version comes out, you'll have to run the good old GUI like this:
+
+```bash
+$ protontricks -c 'wine "/home/$USER/.steam/steam/steamapps/compatdata/252950/pfx/drive_c/Program Files/BakkesMod/BakkesMod.exe"' 252950
+```
+
+You can make this an alias or another bash script, like I did.
+
+Once it finishes updating you can close it. IMPORTANT: Do not attempt to launch Rocket League while the BakkesMod GUI is running, it won't work. For some reason the game doesn't like when you launch it while something else is running in its prefix (you can run anything after the game has launched though).
+
+# References
+
+Everything is taken from [this GitHub issue](https://github.com/bakkesmodorg/BakkesMod2-Plugins/issues/2). The custom injector code comes from [this GitHub gist](https://gist.github.com/blastrock/6958033f03a0bdffa52c6dfa2ce0e60a), which is also referenced in the GitHub issue. The launch script is heavily inspired on [this comment from the GitHub issue](https://github.com/bakkesmodorg/BakkesMod2-Plugins/issues/2#issuecomment-897120768), I just simplified some parts of it.
+
+# EDIT: A better launch script
+
+Instead of waiting for the log file to have the `"Initializing Engine Completed"` line we can just wait until RocketLeague.exe is running like this:
 
 ```bash
 while ! killall -0 RocketLeague.ex 2> /dev/null; do
@@ -238,19 +256,3 @@ Notice we're not launching Rocket League in this script like we were doing befor
 This runs the script in the background and Rocket League in the foreground.
 
 This version of the launch script injects much faster for some reason (and we don't need to create a log file, which keeps our home directory a little cleaner), but it might be less stable, so I'm gonna leave both versions for you to experiment with.
-
-# Updating BakkesMod
-
-The injector doesn't take care of updating BakkesMod, so whenever a new version comes out, you'll have to run the good old GUI like this:
-
-```bash
-$ protontricks -c 'wine "/home/$USER/.steam/steam/steamapps/compatdata/252950/pfx/drive_c/Program Files/BakkesMod/BakkesMod.exe"' 252950
-```
-
-You can make this an alias or another bash script, like I did.
-
-Once it finishes updating you can close it. IMPORTANT: Do not attempt to launch Rocket League while the BakkesMod GUI is running, it won't work. For some reason the game doesn't like when you launch it while something else is running in its prefix (you can run anything after the game has launched though).
-
-# References
-
-Everything is taken from [this GitHub issue](https://github.com/bakkesmodorg/BakkesMod2-Plugins/issues/2). The custom injector code comes from [this GitHub gist](https://gist.github.com/blastrock/6958033f03a0bdffa52c6dfa2ce0e60a), which is also referenced in the GitHub issue. The launch script is heavily inspired on [this comment from the GitHub issue](https://github.com/bakkesmodorg/BakkesMod2-Plugins/issues/2#issuecomment-897120768), I just simplified some parts of it.
